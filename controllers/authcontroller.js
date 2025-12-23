@@ -60,8 +60,8 @@ const login = async(req,res)=>{
         return res.status(401).json({message:"email or password is incorrect"});
     }
     
-    const token = jwt.sign({ id: user._id, email: user.email, role: user.role }, "your_jwt_secret_key", { expiresIn: "1h" });
-    // user.token = token;
+    const token = jwt.sign({ id: user._id, email: user.email, role: user.role }, "helloworld", { expiresIn: "1h" });
+    user.token = token;
 
     return res.status(200).json({
         message:"Login successful",
