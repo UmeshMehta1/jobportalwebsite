@@ -39,46 +39,42 @@ exports.applyForJob = applyForJob;
 
 
 
+// //get all applications for a user
+// const getUserApplications = async(req,res)=>{
+//     try{
+//         const userId = req.user._id;
 
+//         const applications = await applicationModel.find({UserId: userId})
+//             .populate("JobId")
+//             .populate("UserId","username email");
 
+//         return res.status(200).json({
+//             message:"Applications fetched successfully",
+//             data:applications
+//         });
 
+//     }catch(error){
+//         return res.status(500).json({message:"Something went wrong", error: error.message});
+//     }
+// }
 
-//get all applications for a user
-const getUserApplications = async(req,res)=>{
-    try{
-        const userId = req.user._id;
+// exports.getUserApplications = getUserApplications;
 
-        const applications = await applicationModel.find({UserId: userId})
-            .populate("JobId")
-            .populate("UserId","username email");
+// //get all applications for a job (for job provider)
+// const getJobApplications = async(req,res)=>{
+//     try{
+//         const jobId = req.params.id;
 
-        return res.status(200).json({
-            message:"Applications fetched successfully",
-            data:applications
-        });
+//         const applications = await applicationModel.find({JobId: jobId})
+//             .populate("JobId")
+//             .populate("UserId","username email");
+//         return res.status(200).json({
+//             message:"Applications fetched successfully",
+//             data:applications
+//         });             
+//     }catch(error){
+//         return res.status(500).json({message:"Something went wrong", error: error.message});
+//     }
+// }
 
-    }catch(error){
-        return res.status(500).json({message:"Something went wrong", error: error.message});
-    }
-}
-
-exports.getUserApplications = getUserApplications;
-
-//get all applications for a job (for job provider)
-const getJobApplications = async(req,res)=>{
-    try{
-        const jobId = req.params.id;
-
-        const applications = await applicationModel.find({JobId: jobId})
-            .populate("JobId")
-            .populate("UserId","username email");
-        return res.status(200).json({
-            message:"Applications fetched successfully",
-            data:applications
-        });             
-    }catch(error){
-        return res.status(500).json({message:"Something went wrong", error: error.message});
-    }
-}
-
-exports.getJobApplications = getJobApplications;
+// exports.getJobApplications = getJobApplications;
