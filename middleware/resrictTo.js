@@ -1,6 +1,6 @@
 const restrictTo = (...roles)=>{
   return (req, res, next)=>{
-    //  console.log(roles)
+     console.log(roles)
 
     const userRole= req.user.role
 
