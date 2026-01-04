@@ -10,4 +10,4 @@ Router.get("/getjob/:id", getSingleJob)
 Router.patch("/applyjob/:id", isAuthenticated, restrictTo("jobprovider"), updateJob)
 Router.delete("/deletejob/:id", isAuthenticated, restrictTo("jobprovider"), deleteJob)
 
-module.exports = Router;
+module.exports = Router;                

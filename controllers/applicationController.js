@@ -7,22 +7,33 @@ const applyForJob = async(req,res)=>{
     try{
         const jobId = req.params.id;
         const userId = req.user._id;
+        const {status}= req.body;
+
+        // if(!status){
+        //     return res.status(400).json({message:"Status is required"});
+        // }
 
         //check if job exists
-        const job = await jobModel.findById(jobId);
+        const job = await jobModel.findOne({_id: jobId});
+        console.log("job",job)
+
+        
         if(!job){
             return res.status(404).json({message:"Job not found"});
         }
 
         //check if user has already applied for the job
         const alreadyApplied = await applicationModel.findOne({JobId: jobId, UserId: userId});
+
         if(alreadyApplied){
             return res.status(409).json({message:"You have already applied for this job"});
-        }                   
+        }     
+
         //create application
         const application = await applicationModel.create({
             JobId: jobId,
-            UserId: userId
+            UserId: userId,
+            status: status || 'applied'
         });
 
         return res.status(201).json({

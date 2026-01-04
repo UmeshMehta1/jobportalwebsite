@@ -6,6 +6,7 @@ const dbConnect = require('./db/dbconfig');
 
 const authRoute= require('./routes/authRoute');
 const jobRoute= require("./routes/jobRoute");
+const applicationRoute= require("./routes/applicationRoute");
 
 // Connect to the database
 dbConnect();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/api/auth",authRoute)
 app.use("/api/job",jobRoute)
+app.use("/api/application",applicationRoute)
  
 app.get('/', (req, res) => {
     res.send('Hello World!');

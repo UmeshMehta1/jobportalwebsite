@@ -1,9 +1,9 @@
 const Router = require("express").Router();
 
-const {applyJob} = require("../controllers/applicationController");
+const {applyForJob} = require("../controllers/applicationController");
 const isAuthenticated = require("../middleware/isAut");
 const restrictTo = require("../middleware/resrictTo");
 
-Router.post("/apply/:jobId", isAuthenticated, restrictTo("jobseeker"), applyJob);
+Router.post("/apply/:id", isAuthenticated, restrictTo("jobseeker"), applyForJob);
 
 module.exports = Router;
