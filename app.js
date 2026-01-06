@@ -7,9 +7,11 @@ const dbConnect = require('./db/dbconfig');
 const authRoute= require('./routes/authRoute');
 const jobRoute= require("./routes/jobRoute");
 const applicationRoute= require("./routes/applicationRoute");
-
+const cors = require('cors');
 // Connect to the database
 dbConnect();
+
+app.use(cors());
 
 app.use(express.json());
 

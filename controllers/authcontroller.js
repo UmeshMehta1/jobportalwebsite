@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken');
 
 const register = async(req,res)=>{
     try{
-     const {username,password,email,role} = req.body;
+     const {name,password,email,role} = req.body;
 
      console.log(req.body);
      
-     if(!username || !password || !email){
+     if(!name || !password || !email){
         return res.status(400).json({message:"All fields are required"});
      }
 
@@ -20,7 +20,7 @@ const register = async(req,res)=>{
         }
 
         const newUser = await authModel.create({
-            username,
+            username:name,
             email,
             password: bcrypt.hashSync(password, 10),
             role
@@ -37,38 +37,43 @@ const register = async(req,res)=>{
       
 }
 
-const login = async(req,res)=>{
-    //login logic here
-    const {email,password} = req.body;
-    
-    if(!email || !password){
-        return res.status(400).json({message:"All fields are required"});
+const login = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+  
+      if (!email || !password) {
+        return res.status(400).json({ message: "All fields are required" });
+      }
+  
+      const user = await authModel.findOne({ email });
+  
+      // Guard if user not found
+      if (!user) {
+        return res.status(401).json({ message: "email or password is incorrect" });
+      }
+  
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+  
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: "email or password is incorrect" });
+      }
+  
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        "helloworld",
+        { expiresIn: "1h" }
+      );
+      user.token = token;
+  
+      return res.status(200).json({
+        message: "Login successful",
+        data: user,
+        token,
+      });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Server error" });
     }
-
-    const user = await authModel.findOne({email});
-   
-
-    console.log(user)
-   
-    // if(user.email !== email){
-    //     return res.status(401).json({message:"email EMAIL is incorrect"});
-    // }
-
-    const isPasswordValid = bcrypt.compareSync(password, user.password);
-
-    if(!isPasswordValid || user.email !== email){
-        return res.status(401).json({message:"email or password is incorrect"});
-    }
-    
-    const token = jwt.sign({ id: user._id, email: user.email, role: user.role }, "helloworld", { expiresIn: "1h" });
-    user.token = token;
-
-    return res.status(200).json({
-        message:"Login successful",
-        data:user,
-         token: token
-    })
-
-}
+  };
 
 module.exports = {register,login};
