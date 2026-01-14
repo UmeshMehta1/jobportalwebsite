@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth",authRoute)
-app.use("/api/job",jobRoute)
+app.use("/api/jobs",jobRoute)
 app.use("/api/application",applicationRoute)
  
 app.get('/', (req, res) => {
