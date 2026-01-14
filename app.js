@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT =  3000;
+const PORT =3001;
 
 const dbConnect = require('./db/dbconfig');
 
@@ -11,7 +11,7 @@ const cors = require('cors');
 // Connect to the database
 dbConnect();
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 app.use(express.json());
 
