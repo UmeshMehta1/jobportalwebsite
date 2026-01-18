@@ -7,7 +7,7 @@ const applyForJob = async(req,res)=>{
     try{
         const jobId = req.params.id;
         const userId = req.user._id;
-        const {status}= req.body;
+        // const {status} = req.body;
 
         // if(!status){
         //     return res.status(400).json({message:"Status is required"});
@@ -33,7 +33,6 @@ const applyForJob = async(req,res)=>{
         const application = await applicationModel.create({
             JobId: jobId,
             UserId: userId,
-            status: status || 'applied'
         });
 
         return res.status(201).json({
